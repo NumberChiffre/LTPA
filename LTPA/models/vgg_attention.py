@@ -3,15 +3,34 @@ from LTPA.utils.utilities import *
 from LTPA import vgg_config, vgg_in_channels
 
 
-class VGGAttention(nn.Module):
+class Attention(nn.Module):
+    def __init__(self, mode: str = 'pc'):
+        super(Attention, self).__init__()
+        self.mode = mode
+
+    def forward(self, x):
+        raise NotImplementedError()
+
+    @staticmethod
+    def _make_layers():
+        raise NotImplementedError()
+
+    def _get_compatibility_score(self, l, g, level):
+        raise NotImplementedError()
+
+    @staticmethod
+    def _get_weighted_combination(l, ae):
+        raise NotImplementedError()
+
+
+class VGGAttention(Attention):
     def __init__(self, mode: str = 'pc'):
         """
         :param mode:
         dp for dot product for matching the global and local descriptors
         pc for the use of parametrised compatibility
         """
-        super(VGGAttention, self).__init__()
-        self.mode = mode
+        super().__init__(mode=mode)
 
         # features through VGG
         self.features = self._make_layers()
